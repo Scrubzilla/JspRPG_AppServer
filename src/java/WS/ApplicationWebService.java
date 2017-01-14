@@ -33,7 +33,7 @@ public class ApplicationWebService {
         String response = charHelp.createCharacter(null, name, portrait, str, dex, vit, intell, wis, chr);
         
         
-        return null;
+        return response;
     }
 
     /**
@@ -53,9 +53,48 @@ public class ApplicationWebService {
      */
     @WebMethod(operationName = "changePassword")
     public String changePassword(@WebParam(name = "username") String username, @WebParam(name = "newPassword") String newPassword) {
-        //TODO write your implementation code here:
-        return null;
+        AccountHelper accHelp = new AccountHelper();
+        String response = accHelp.changePassword(username, newPassword);
+        return response;
     }
+    
+    
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "logInCredentials")
+    public String logInCredentials(@WebParam(name = "username") String username, @WebParam(name = "password") String password) {
+        AccountHelper accHelp = new AccountHelper();
+        String response = accHelp.checkLogInCred(username, password);
+        return response;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "getSecurityQuestion")
+    public String getSecurityQuestion(@WebParam(name = "username") String username) {
+        AccountHelper accHelp = new AccountHelper();
+        String response = accHelp.getSecurityQuestion(username);
+        return response;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "checkSecurityAnswer")
+    public String checkSecurityAnswer(@WebParam(name = "username") String username, @WebParam(name = "answer") String answer) {
+        AccountHelper accHelp = new AccountHelper();
+        String response = accHelp.checkSecurityAnswer(username, answer);
+        return response;
+    }
+    
+    
+    
+    
+    
+    
     
     
     
