@@ -7,6 +7,9 @@
     <service name="ZoneHandlerBean">
       <implementation-class>WS.ZoneHandlerBean</implementation-class>
     </service>
+    <service name="BattleHandlerBean">
+      <implementation-class>WS.BattleHandlerBean</implementation-class>
+    </service>
   </services>
   <clients/>
 </jax-ws>

@@ -207,7 +207,6 @@ public class AccountHelper {
         if(accountList.get(0).getSecurityquestionans().equalsIgnoreCase(answer)){
             message = "1";
         }
-
         return message;
     }
 

@@ -23,12 +23,14 @@ import jsrpg.Character;
 public class ZoneHandlerBean {
 
     @WebMethod
-    public void addAccountToZone(String accName, String zoneId) {
+    public String addAccountToZone(String accName, String zoneId) {
         ZoneStorage.getInstance().addAccountToZone(zoneId, accName);
+        return "";
     }
     @WebMethod
-    public void moveAccountFromZone(String accName) {
+    public String moveAccountFromZone(String accName) {
         ZoneStorage.getInstance().moveAccoutFromZone(accName);
+        return "";
     }
     @WebMethod
     public ArrayList<String> getZone(String zoneId){

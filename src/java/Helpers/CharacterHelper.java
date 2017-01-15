@@ -20,29 +20,28 @@ import org.hibernate.Session;
  * @author User
  */
 public class CharacterHelper {
-    
+
     /*
-        CharacterId id, Account account, String name, int portrait, Date lastloggedin, Integer level, Integer xp, 
-    Integer location, Boolean isonline, Integer money, Integer strength, Integer dexterity, Integer vitality, Integer intelligence, 
-    Integer wisdom, Integer charisma, Integer equiphelm, Integer equiparmor, Integer equipweapon, Integer equipoffhand, Integer struse, 
-    Integer dexuse, Integer fureuse, Integer iceuse, Integer arcaneuse, Integer lightuse, Integer darkuse, Integer magoffuse, 
-    Integer magdefuse
+     CharacterId id, Account account, String name, int portrait, Date lastloggedin, Integer level, Integer xp, 
+     Integer location, Boolean isonline, Integer money, Integer strength, Integer dexterity, Integer vitality, Integer intelligence, 
+     Integer wisdom, Integer charisma, Integer equiphelm, Integer equiparmor, Integer equipweapon, Integer equipoffhand, Integer struse, 
+     Integer dexuse, Integer fureuse, Integer iceuse, Integer arcaneuse, Integer lightuse, Integer darkuse, Integer magoffuse, 
+     Integer magdefuse
     
     
-    */
-    public String createCharacter(Account account, String name, int portrait, int str, int dex, int vit, int intell, int wis, int charisma){
+     */
+    public String createCharacter(Account account, String name, int portrait, int str, int dex, int vit, int intell, int wis, int charisma) {
         GenericHelper genHelp = new GenericHelper();
         int id = genHelp.getCount("Id", "Charactert") + 1;
-        
-        
+
         Session session = HibernateUtil.getSessionFactory().openSession();
         org.hibernate.Transaction tx = session.beginTransaction();
-        try{
+        try {
             Character character = new Character();
             CharacterId charId = new CharacterId();
             charId.setId(id);
             charId.setAccountId(account.getId());
-            
+
             character.setId(charId);
             character.setAccount(account);
             character.setName(name);
@@ -59,51 +58,50 @@ public class CharacterHelper {
             character.setIntelligence(intell);
             character.setWisdom(wis);
             character.setCharisma(charisma);
-            
-            
+
             session.save(character);
             session.getTransaction().commit();
             session.close();
-            
-            }catch(Exception e){
+
+        } catch (Exception e) {
             e.printStackTrace();
             tx.rollback();
             session.close();
             return "Failed to create character";
         }
         return "Successfully created a character with name " + name;
-       
+
     }
-    
-    public String checkName(String name){
+
+    public String checkName(String name) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<Character> charList = null;
         org.hibernate.Transaction tx = session.beginTransaction();
         try {
-            
+
             Query q = session.createQuery("from Character");
             charList = (List<Character>) q.list();
             session.close();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             tx.rollback();
         }
-        
+
         String message = "0";
-        for(Character chara : charList){
-            if(chara.getName().equalsIgnoreCase(name)){
+        for (Character chara : charList) {
+            if (chara.getName().equalsIgnoreCase(name)) {
                 message = "1";
             }
         }
         return message;
     }
-    
-    public String changeLocationOfChar(Character chara, int location){
+
+    public String changeLocationOfChar(Character chara, int location) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         org.hibernate.Transaction tx = session.beginTransaction();
         try {
-            
+
             String hql = "UPDATE Character SET location =:Location WHERE name =:Name";
             Query query = session.createSQLQuery(hql);
             query.setParameter("Name", chara.getName());
@@ -112,43 +110,67 @@ public class CharacterHelper {
             session.getTransaction().commit();
             System.out.println("Rows Affected: " + result);
             session.close();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             tx.rollback();
             session.close();
             return "Not successfull";
         }
-        
-        
+
         return "successfuly added new location";
     }
-    
-    public Character getCharacterFromAccountName(String accName){
+
+    public Character getCharacterFromAccountName(String accName) {
         Character character = null;
-        
+
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<Character> charList = null;
         org.hibernate.Transaction tx = session.beginTransaction();
         try {
-            
+
             Query q = session.createQuery("from Character");
             charList = (List<Character>) q.list();
             session.close();
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             tx.rollback();
             session.close();
         }
-        
-        
-        for(Character chara : charList){
-            if(chara.getAccount().getUsername().equalsIgnoreCase(accName)){
+
+        for (Character chara : charList) {
+            if (chara.getAccount().getUsername().equalsIgnoreCase(accName)) {
                 character = chara;
             }
         }
-        
+
         return character;
     }
+
+    public String updateXP(int xp, String name) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        org.hibernate.Transaction tx = session.beginTransaction();
+        try {
+
+            String hql = "UPDATE Character SET xp =:XP WHERE name =:Name";
+            Query query = session.createSQLQuery(hql);
+            query.setParameter("Name", name);
+            query.setParameter("Location", xp);
+            int result = query.executeUpdate();
+            session.getTransaction().commit();
+            System.out.println("Rows Affected: " + result);
+            session.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+            session.close();
+            return "Not successfull";
+        }
+
+        return "Successfully updated XP";
+    }
+    
+   
 }
