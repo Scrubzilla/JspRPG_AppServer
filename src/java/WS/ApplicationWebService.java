@@ -30,6 +30,8 @@ public class ApplicationWebService {
     public String addCharacter(@WebParam(name = "username") String username, @WebParam(name = "name") String name, @WebParam(name = "portrait") int portrait, @WebParam(name = "str") int str, @WebParam(name = "dex") int dex, @WebParam(name = "vit") int vit, @WebParam(name = "intell") int intell, @WebParam(name = "wis") int wis, @WebParam(name = "chr") int chr) {
         AccountHelper accHelp = new AccountHelper();
         
+        
+        
         CharacterHelper charHelp = new CharacterHelper();
         String response = charHelp.createCharacter(accHelp.getAccount(username), name, portrait, str, dex, vit, intell, wis, chr);
         
@@ -45,6 +47,10 @@ public class ApplicationWebService {
     public String addAccount(@WebParam(name = "username") String username, @WebParam(name = "password") String password, @WebParam(name = "eMail") String eMail, @WebParam(name = "securityQ") String securityQ, @WebParam(name = "securityQans") String securityQans) {
         AccountHelper accHelp = new AccountHelper();
         
+        if(accHelp.checkUsername(username).equals("1") || accHelp.checkEmail(eMail).equals("1")){
+            return "The email or the username is already in user";
+        }
+        
         String response = accHelp.createAccount(eMail, username, password, securityQans, securityQans);
         
         MailHandler mailHa = new MailHandler();
@@ -57,9 +63,16 @@ public class ApplicationWebService {
      * Web service operation
      */
     @WebMethod(operationName = "changePassword")
-    public String changePassword(@WebParam(name = "username") String username, @WebParam(name = "newPassword") String newPassword) {
+    public String changePassword(@WebParam(name = "username") String username, @WebParam(name = "newPassword") String newPassword, @WebParam(name = "oldPassword") String oldPassword) {
+         String response = "The old password does not match";
+        
         AccountHelper accHelp = new AccountHelper();
-        String response = accHelp.changePassword(username, newPassword);
+        
+        if(accHelp.getAccount(username).getPassword().equals(oldPassword)){
+            response = accHelp.changePassword(username, newPassword);
+        }
+        
+        
         return response;
     }
     
@@ -131,6 +144,30 @@ public class ApplicationWebService {
         
         return true;
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "changeEmail")
+    public String changeEmail(@WebParam(name = "username") String username, @WebParam(name = "newEmail") String newEmail, @WebParam(name = "oldEmail") String oldEmail, @WebParam(name = "securityAns") String securityAns) {
+        AccountHelper accHelp = new AccountHelper();
+        String response = accHelp.changeEmail(username, newEmail, oldEmail, securityAns);
+        return response;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "resetPassword")
+    public String resetPassword(@WebParam(name = "username") String username, @WebParam(name = "newPassword") String newPassword) {
+        AccountHelper accHelp = new AccountHelper();
+        String response = accHelp.changePassword(username, newPassword);
+        return response;
+    }
+    
+    
+    
+    
     
     
 

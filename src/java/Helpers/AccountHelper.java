@@ -7,6 +7,8 @@ package Helpers;
 
 import Pojo.GenericHelper;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import jsrpg.Account;
 import jsrpg.Character;
 import jsrpg.HibernateUtil;
@@ -94,6 +96,15 @@ public class AccountHelper {
     }
 
     public String checkEmail(String eMail) {
+        String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(eMail);
+        
+        if (matcher.matches() == true) {
+            return "1";
+        }
+        
+        
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<Account> accountList = null;
         org.hibernate.Transaction tx = session.beginTransaction();
@@ -311,5 +322,38 @@ public class AccountHelper {
             response = accountList.get(0).getUsername();
             return response;
         }
+    }
+    
+    public String changeEmail(String username, String newEmail, String oldEmail, String securityAnsw){
+        if(checkEmail(oldEmail).equals("0")){
+            return "There is no such email";
+        }
+        
+        if(checkSecurityAnswer(username, securityAnsw).equalsIgnoreCase("0")){
+            return "The answer is not correct";
+        }
+        
+         Session session = HibernateUtil.getSessionFactory().openSession();
+        org.hibernate.Transaction tx = session.beginTransaction();
+        try {
+
+            String hql = "UPDATE Account SET Email =:email WHERE username =:Username";
+            Query query = session.createSQLQuery(hql);
+            query.setParameter("Username", username);
+            query.setParameter("email", newEmail);
+            int result = query.executeUpdate();
+            session.getTransaction().commit();
+            System.out.println("Rows Affected: " + result);
+            session.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+            session.close();
+            return "Not successfull";
+        }
+        
+        
+        return "Successfully changed the email";
     }
 }
