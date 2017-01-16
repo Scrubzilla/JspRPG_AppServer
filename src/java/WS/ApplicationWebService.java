@@ -7,6 +7,7 @@ package WS;
 
 import Helpers.AccountHelper;
 import Helpers.CharacterHelper;
+import Pojo.MailHandler;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -26,11 +27,12 @@ public class ApplicationWebService {
      * Web service operation
      */
     @WebMethod(operationName = "addCharacter")
-    public String addCharacter(@WebParam(name = "name") String name, @WebParam(name = "portrait") int portrait, @WebParam(name = "str") int str, @WebParam(name = "dex") int dex, @WebParam(name = "vit") int vit, @WebParam(name = "intell") int intell, @WebParam(name = "wis") int wis, @WebParam(name = "chr") int chr, @WebParam(name = "accountName") String accountName) {
+    public String addCharacter(@WebParam(name = "username") String username, @WebParam(name = "name") String name, @WebParam(name = "portrait") int portrait, @WebParam(name = "str") int str, @WebParam(name = "dex") int dex, @WebParam(name = "vit") int vit, @WebParam(name = "intell") int intell, @WebParam(name = "wis") int wis, @WebParam(name = "chr") int chr) {
         AccountHelper accHelp = new AccountHelper();
-        accHelp.getAccount(accountName);
+        
         CharacterHelper charHelp = new CharacterHelper();
-        String response = charHelp.createCharacter(null, name, portrait, str, dex, vit, intell, wis, chr);
+        String response = charHelp.createCharacter(accHelp.getAccount(username), name, portrait, str, dex, vit, intell, wis, chr);
+        
         
         
         return response;
@@ -44,6 +46,9 @@ public class ApplicationWebService {
         AccountHelper accHelp = new AccountHelper();
         
         String response = accHelp.createAccount(eMail, username, password, securityQans, securityQans);
+        
+        MailHandler mailHa = new MailHandler();
+        mailHa.sendRegisterConfirmMail(eMail, username);
         
         return response;
     }
@@ -109,6 +114,31 @@ public class ApplicationWebService {
         String response = accHelp.checkRole(username);
         return response;
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "forgotPassword")
+    public boolean forgotPassword(@WebParam(name = "eMail") String eMail) {
+        AccountHelper accHelp = new AccountHelper();
+        String response = accHelp.forgotPasswordStuff(eMail);
+        
+        if(response.equals("0")){
+            return false;
+        }
+        MailHandler mailHa = new MailHandler();
+        mailHa.sendPasswordResetMail(eMail, response);
+        
+        return true;
+    }
+    
+    
+
+    /**
+     * Web service operation
+     */
+    
+    
     
     
     

@@ -32,7 +32,7 @@ public class CharacterHelper {
      */
     public String createCharacter(Account account, String name, int portrait, int str, int dex, int vit, int intell, int wis, int charisma) {
         GenericHelper genHelp = new GenericHelper();
-        int id = genHelp.getCount("Id", "Charactert") + 1;
+        int id = genHelp.getCount("Id", "Character") + 1;
 
         Session session = HibernateUtil.getSessionFactory().openSession();
         org.hibernate.Transaction tx = session.beginTransaction();
@@ -72,7 +72,7 @@ public class CharacterHelper {
             session.close();
             return "Failed to create character";
         }
-        return "Successfully created a character with name " + name;
+        return "Character was created successfully!";
 
     }
 

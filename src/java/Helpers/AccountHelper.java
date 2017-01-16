@@ -253,7 +253,7 @@ public class AccountHelper {
             tx.rollback();
         }
         
-        if(accountList == null){
+        if(accountList.size() == 0){
             hasChar = false;
         }else{
             hasChar = true;
@@ -285,4 +285,31 @@ public class AccountHelper {
         return response;
     }
     
+    public String forgotPasswordStuff(String email){
+        String response = "";
+        
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Account> accountList = null;
+        org.hibernate.Transaction tx = session.beginTransaction();
+        try {
+
+            Query q = session.createQuery("from Account where Email =:email");
+            q.setParameter("email", email);
+            accountList = (List<Account>) q.list();
+            session.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+        }
+        
+        
+        if(accountList.size() == 0){
+            response = "0";
+            return response;
+        }else {
+            response = accountList.get(0).getUsername();
+            return response;
+        }
+    }
 }
