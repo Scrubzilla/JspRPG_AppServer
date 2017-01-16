@@ -51,7 +51,7 @@ public class BattleHandlerBean {
 
         this.zoneId = zoneId;
         this.areaId = areaId;
-        
+
         character = charHelp.getCharacterFromAccountName(accName);
         creatureList = areaHelp.getCreaturesFromArea(zoneId, areaId);
         characterHP = batHelp.getHPfromVit(character.getVitality());
@@ -72,7 +72,7 @@ public class BattleHandlerBean {
         }
         return creatureNameList;
     }
-    
+
     @WebMethod
     public List<String> getspellsNameList() {
         List<String> spellsNameList = new ArrayList<>();
@@ -101,73 +101,88 @@ public class BattleHandlerBean {
     public String getCharacterMana() {
         return characterMana + "";
     }
-    
+
     @WebMethod
     public String attackCreature(String creaturePos) {
         creatureHPList.set(Integer.parseInt(creaturePos), batHelp.newCreatureHPafterAttack(creatureHPList.get(Integer.parseInt(creaturePos)), creatureList.get(Integer.parseInt(creaturePos)), character));
-        
-        if(creatureHPList.get(Integer.parseInt(creaturePos)) <= 0){
+
+        if (creatureHPList.get(Integer.parseInt(creaturePos)) <= 0) {
             creatureHPList.remove(Integer.parseInt(creaturePos));
             creatureList.remove(Integer.parseInt(creaturePos));
-            if(creatureList.size() == 0){
+            if (creatureList.size() == 0) {
+                updateXP(character);
+                resetAllStuff();
                 return "All creatures defeated!";
-            }else{
-                 return "The creature is dead, woo";
+            } else {
+                return "The creature is dead, woo";
             }
-  
+
         }
-        
+
         return "You attack the creature!";
     }
+
     @WebMethod
-    public String creaturesAttackPlayer(){
+    public String creaturesAttackPlayer() {
         int amount = 0;
-        for(int i = 0; i < creatureList.size(); i++){
-            
-            amount+= batHelp.creatureAttacksHero(character.getStrength(), character.getVitality(), creatureList.get(i).getAttack());
+        for (int i = 0; i < creatureList.size(); i++) {
+
+            amount += batHelp.creatureAttacksHero(character.getStrength(), character.getVitality(), creatureList.get(i).getAttack());
         }
         characterHP -= amount;
-        
-        if(characterHP <= 0){
+
+        if (characterHP <= 0) {
+            resetAllStuff(); 
             return "The creatures killed you, tough luck";
+            
         }
-        
+
         return "Creatures attacked you for " + amount;
     }
-    
+
     @WebMethod
-    public String useSpellOnCreature(String spellPos, String creaturePos){
+    public String useSpellOnCreature(String spellPos, String creaturePos) {
         characterMana -= spellsList.get(Integer.parseInt(spellPos)).getManacost();
-        if(characterMana <= 0){
+        if (characterMana <= 0) {
             return "cannot use spell, not enough Mana";
         }
-        
-        int dmg =    batHelp.newCreatureHPafterAttack(creatureHPList.get(Integer.parseInt(creaturePos)), creatureList.get(Integer.parseInt(creaturePos)), character);
+
+        int dmg = batHelp.newCreatureHPafterAttack(creatureHPList.get(Integer.parseInt(creaturePos)), creatureList.get(Integer.parseInt(creaturePos)), character);
         int newHP = creatureHPList.get(Integer.parseInt(creaturePos)) - dmg;
 
         creatureHPList.set(Integer.parseInt(creaturePos), newHP);
-        
-        if(creatureHPList.get(Integer.parseInt(creaturePos)) <= 0){
-            
-            
-            
+
+        if (creatureHPList.get(Integer.parseInt(creaturePos)) <= 0) {
+
             creatureHPList.remove(Integer.parseInt(creaturePos));
             creatureList.remove(Integer.parseInt(creaturePos));
-            if(creatureList.size() == 0){
+            if (creatureList.size() == 0) {
+                updateXP(character);
+                resetAllStuff();
                 return "All creatures defeated!";
-            }else{
+            } else {
                 return "The creature is dead, woo";
             }
-  
+
         }
         return "The creature takes " + dmg + " damage";
     }
-    
-    private void updateXPandMonoey(Character chara){
+
+    private void updateXP(Character chara) {
         int xp = batHelp.getXPAmountFromBattle(zoneId, areaId);
         charHelp.updateXP(xp, character.getName());
     }
-    
-    
 
+    private void resetAllStuff() {
+        creatureList = null;
+        creatureHPList = null;
+        spellsList = null;
+        character = null;
+        characterHP = 0;
+        characterMana = 0;
+        XP = 0;
+        money = 0;
+        zoneId = "";
+        areaId = "";
+    }
 }

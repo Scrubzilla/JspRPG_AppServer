@@ -8,6 +8,7 @@ package WS;
 import Helpers.CharacterHelper;
 import Singletons.ZoneStorage;
 import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
@@ -33,8 +34,8 @@ public class ZoneHandlerBean {
         return "";
     }
     @WebMethod
-    public ArrayList<String> getZone(String zoneId){
-        ArrayList<String> zone = null;
+    public List<String> getZone(String zoneId){
+        List<String> zone = null;
         if(zoneId.equalsIgnoreCase("1")){
             zone = ZoneStorage.getInstance().getZone1();
         }else if(zoneId.equalsIgnoreCase("2")){
@@ -57,4 +58,37 @@ public class ZoneHandlerBean {
         return "";
     }
     
+    
+    @WebMethod
+    public List<String> getzone1Chat(){
+        return ZoneStorage.getInstance().getZone1Chat();
+    }
+    
+    @WebMethod
+    public List<String> getzone2Chat(){
+        return ZoneStorage.getInstance().getZone2Chat();
+    }
+    
+    @WebMethod
+    public List<String> getzone3Chat(){
+        return ZoneStorage.getInstance().getZone3Chat();
+    }
+    
+    @WebMethod
+    public String addToZone1Chat(String message){
+        ZoneStorage.getInstance().addMessageToChat1(message);
+        return "successfully added the meesage to chat";
+    }
+    
+    @WebMethod
+    public String addToZone2Chat(String message){
+        ZoneStorage.getInstance().addMessageToChat1(message);
+        return "successfully added the meesage to chat";
+    }
+    
+    @WebMethod
+    public String addToZone3Chat(String message){
+        ZoneStorage.getInstance().addMessageToChat1(message);
+        return "successfully added the meesage to chat";
+    }
 }

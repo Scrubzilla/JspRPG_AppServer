@@ -10,6 +10,9 @@
     <service name="BattleHandlerBean">
       <implementation-class>WS.BattleHandlerBean</implementation-class>
     </service>
+    <service name="PvPHandlerBean">
+      <implementation-class>WS.PvPHandlerBean</implementation-class>
+    </service>
   </services>
   <clients/>
 </jax-ws>
