@@ -58,6 +58,9 @@ public class CharacterHelper {
             character.setIntelligence(intell);
             character.setWisdom(wis);
             character.setCharisma(charisma);
+            
+            AccountHelper accHelp = new AccountHelper();
+            accHelp.addCharacterToAccount(account.getUsername(), character);
 
             session.save(character);
             session.getTransaction().commit();

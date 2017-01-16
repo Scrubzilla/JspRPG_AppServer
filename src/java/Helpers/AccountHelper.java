@@ -8,6 +8,7 @@ package Helpers;
 import Pojo.GenericHelper;
 import java.util.List;
 import jsrpg.Account;
+import jsrpg.Character;
 import jsrpg.HibernateUtil;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -45,7 +46,7 @@ public class AccountHelper {
             tx.rollback();
             return "Error during creation of account";
         }
-        return "Successfully created an account with the username " + username;
+        return "Account was created successfully!";
     }
 
     public Account getAccount(String username) {
@@ -156,7 +157,7 @@ public class AccountHelper {
 
         String message = "";
         for (Account account : accountList) {
-            if (account.getUsername().equalsIgnoreCase(accUser) && account.getPassword().equalsIgnoreCase(password)) {
+            if (account.getUsername().equalsIgnoreCase(accUser) && account.getPassword().equals(password)) {
                 message = account.getUsername();
             } else {
                 message = "0";
@@ -210,4 +211,78 @@ public class AccountHelper {
         return message;
     }
 
+    public String addCharacterToAccount(String username, Character chara){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        org.hibernate.Transaction tx = session.beginTransaction();
+        try {
+
+            String hql = "UPDATE Account SET Characters =:chara WHERE username =:Username";
+            Query query = session.createSQLQuery(hql);
+            query.setParameter("Username", username);
+            query.setParameter("chara", chara);
+            int result = query.executeUpdate();
+            session.getTransaction().commit();
+            System.out.println("Rows Affected: " + result);
+            session.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+            session.close();
+            return "Not successfull";
+        }
+        
+        return "";
+    }
+    
+    public boolean checkIfAccHasChar(String username){
+        boolean hasChar = false;
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Account> accountList = null;
+        org.hibernate.Transaction tx = session.beginTransaction();
+        try {
+
+            Query q = session.createQuery("select characters from Account where Username =:username");
+            q.setParameter("username", username);
+            accountList = (List<Account>) q.list();
+            session.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+        }
+        
+        if(accountList == null){
+            hasChar = false;
+        }else{
+            hasChar = true;
+        }
+        
+        return hasChar;
+    }
+    
+    public String checkRole(String username){
+        String response = "0";
+        
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Account> accountList = null;
+        org.hibernate.Transaction tx = session.beginTransaction();
+        try {
+
+            Query q = session.createQuery("from Account where Username =:username");
+            q.setParameter("username", username);
+            accountList = (List<Account>) q.list();
+            session.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+        }
+        
+        response = accountList.get(0).getRole() + "";
+        
+        return response;
+    }
+    
 }

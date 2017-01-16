@@ -89,6 +89,30 @@ public class ApplicationWebService {
         String response = accHelp.checkSecurityAnswer(username, answer);
         return response;
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "checkCharacterFromUsername")
+    public boolean checkCharacterFromUsername(@WebParam(name = "username") String username) {
+        AccountHelper accHelp = new AccountHelper();
+        
+        return accHelp.checkIfAccHasChar(username);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "getRoleFromAccount")
+    public String getRoleFromAccount(@WebParam(name = "username") String username) {
+        AccountHelper accHelp = new AccountHelper();
+        String response = accHelp.checkRole(username);
+        return response;
+    }
+    
+    
+    
+    
     
     
     
