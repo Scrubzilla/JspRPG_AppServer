@@ -27,7 +27,7 @@ public class MailHandler {
     public void sendPasswordResetMail(String recipient, String username) {
 
         System.out.println("Sent reset email!");
-        mailSender(recipient, "Hi there!\n\nSomeone(hopefully you) have requested a password retrieval for the account: " + username + ".\n\nIf this was intentional, please visit the link: http://localhost:8080/JspRPG_WebClient/PasswordReset.jsp?response=" + username + " \n\nThere you will be able to reset it.", "JspRPG Forgotten password");
+        mailSender(recipient, "Hi there!\n\nSomeone(hopefully you) have requested a password retrieval for the account: " + username + ".\n\nIf this was intentional, please visit the link: http://localhost:8080/JspRPG_WebClient/PasswordReset.jsp?user=" + username + " \n\nThere you will be able to reset it.", "JspRPG Forgotten password");
 
     }
 
