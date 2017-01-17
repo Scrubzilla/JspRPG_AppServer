@@ -178,12 +178,12 @@ public class ApplicationWebService {
     /**
      * Web service operation
      */
-    @WebMethod(operationName = "getCharacterName")
+    /*@WebMethod(operationName = "getCharacterName")
     public String getCharacterName(@WebParam(name = "username") String username) {
         CharacterHelper charHelp = new CharacterHelper();
         String response = charHelp.getCharacterName(username);
         return response;
-    }
+    }*/
     
     
     

@@ -100,7 +100,7 @@ public class AccountHelper {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(eMail);
         
-        if (matcher.matches() == true) {
+        if (matcher.matches() == false) {
             return "1";
         }
         
