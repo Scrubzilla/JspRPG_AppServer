@@ -35,7 +35,7 @@ public class AccountHelper {
             account.setEmail(email);
             account.setPassword(password);
             account.setSecurityquestion(securityQuest);
-            account.setSecurityquestionans(securityQuest);
+            account.setSecurityquestionans(securityAns);
 
             session.save(account);
             session.getTransaction().commit();

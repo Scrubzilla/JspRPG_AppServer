@@ -51,7 +51,7 @@ public class ApplicationWebService {
             return "The email or the username is already in user";
         }
         
-        String response = accHelp.createAccount(eMail, username, password, securityQans, securityQans);
+        String response = accHelp.createAccount(eMail, username, password, securityQ, securityQans);
         
         MailHandler mailHa = new MailHandler();
         mailHa.sendRegisterConfirmMail(eMail, username);
