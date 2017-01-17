@@ -48,11 +48,11 @@ public class ZoneHandlerBean {
     }
     
     @WebMethod
-    public String changeCharLocationInDB(String accName, String zoneId){
+    public String changeCharLocationInDB(String charName, String zoneId){
         
         CharacterHelper charHelp = new CharacterHelper();
-        Character chara = charHelp.getCharacterFromAccountName(accName);
-        charHelp.changeLocationOfChar(chara, Integer.parseInt(zoneId));
+        //Character chara = charHelp.getCharacterFromAccountName(accName);
+        charHelp.changeLocationOfChar(charName, Integer.parseInt(zoneId));
         
         
         return "";
