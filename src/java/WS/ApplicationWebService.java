@@ -164,6 +164,30 @@ public class ApplicationWebService {
         String response = accHelp.changePassword(username, newPassword);
         return response;
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "getCharLocation")
+    public String getCharLocation(@WebParam(name = "username") String username) {
+        CharacterHelper charHelp = new CharacterHelper();
+        String response = charHelp.getCharLocation(username);
+        return response;
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "getCharacterName")
+    public String getCharacterName(@WebParam(name = "username") String username) {
+        CharacterHelper charHelp = new CharacterHelper();
+        String response = charHelp.getCharacterName(username);
+        return response;
+    }
+    
+    
+    
+    
     
     
     

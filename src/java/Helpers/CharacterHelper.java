@@ -175,5 +175,57 @@ public class CharacterHelper {
         return "Successfully updated XP";
     }
     
+    public String getCharLocation(String username){
+        Character character = null;
+        
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Character> charList = null;
+        org.hibernate.Transaction tx = session.beginTransaction();
+        try {
+
+            Query q = session.createQuery("from Character");
+            charList = (List<Character>) q.list();
+            session.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+        }
+
+        
+        for (Character chara : charList) {
+            if (chara.getAccount().getUsername().equalsIgnoreCase(username)) {
+                character = chara;
+            }
+        }
+        return character.getLocation() + "";
+    }
+    
+    public String getCharacterName(String username){
+        Character character = null;
+        
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        List<Character> charList = null;
+        org.hibernate.Transaction tx = session.beginTransaction();
+        try {
+
+            Query q = session.createQuery("from Character");
+            charList = (List<Character>) q.list();
+            session.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+        }
+
+        
+        for (Character chara : charList) {
+            if (chara.getAccount().getUsername().equalsIgnoreCase(username)) {
+                character = chara;
+            }
+        }
+        return character.getName() + "";
+    }
+    
    
 }
