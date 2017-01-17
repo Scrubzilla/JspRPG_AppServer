@@ -75,20 +75,20 @@ public class ZoneHandlerBean {
     }
     
     @WebMethod
-    public String addToZone1Chat(String message){
-        ZoneStorage.getInstance().addMessageToChat1(message);
+    public String addToZone1Chat(String message, String username){
+        ZoneStorage.getInstance().addMessageToChat1(username + " - " + message);
         return "successfully added the meesage to chat";
     }
     
     @WebMethod
-    public String addToZone2Chat(String message){
-        ZoneStorage.getInstance().addMessageToChat1(message);
+    public String addToZone2Chat(String message, String username){
+        ZoneStorage.getInstance().addMessageToChat1(username + " - " + message);
         return "successfully added the meesage to chat";
     }
     
     @WebMethod
-    public String addToZone3Chat(String message){
-        ZoneStorage.getInstance().addMessageToChat1(message);
+    public String addToZone3Chat(String message, String username){
+        ZoneStorage.getInstance().addMessageToChat1(username + " - " + message);
         return "successfully added the meesage to chat";
     }
 }
