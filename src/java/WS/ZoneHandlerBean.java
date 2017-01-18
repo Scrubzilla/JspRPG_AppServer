@@ -52,7 +52,7 @@ public class ZoneHandlerBean {
         
         CharacterHelper charHelp = new CharacterHelper();
         //Character chara = charHelp.getCharacterFromAccountName(accName);
-        charHelp.changeLocationOfChar(charName, Integer.parseInt(zoneId));
+        charHelp.changeLocationOfChar(charName, zoneId);
         
         
         return "";

@@ -48,7 +48,7 @@ public class BattleHandlerBean {
      */
     @WebMethod
     public String startingBattle(String accName, String zoneId, String areaId) {
-
+        resetAllStuff();
         this.zoneId = zoneId;
         this.areaId = areaId;
 
@@ -166,6 +166,18 @@ public class BattleHandlerBean {
 
         }
         return "The creature takes " + dmg + " damage";
+    }
+    
+    @WebMethod
+    public List<String> getCreaturesBeforeBattle(String zoneId, String areaId){
+        creatureList = null;
+        creatureList = areaHelp.getCreaturesFromArea(zoneId, areaId);
+        List<String> creatureNameList = new ArrayList<>();
+        for (int i = 0; i < creatureList.size(); i++) {
+            creatureNameList.add(creatureList.get(i).getName());
+        }
+        return creatureNameList;
+        
     }
 
     private void updateXP(Character chara) {
