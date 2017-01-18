@@ -5,11 +5,11 @@
  */
 package WS;
 
-import WSClients.BankService_Service;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.xml.ws.WebServiceRef;
+import ws.BankService_Service;
 
 /**
  *
@@ -17,6 +17,9 @@ import javax.xml.ws.WebServiceRef;
  */
 @WebService(serviceName = "BankwebService")
 public class BankwebService {
+
+    @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/BankService/BankService.wsdl")
+    private BankService_Service service_1;
     @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/BankService/BankService.wsdl")
     private BankService_Service service;
 
@@ -41,9 +44,11 @@ public class BankwebService {
     private String makePayment_1(java.lang.String creditCard, float paymentAmount) {
         // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
         // If the calling of port operations may lead to race condition some synchronization is required.
-        WSClients.BankService port = service.getBankServicePort();
+        ws.BankService port = service_1.getBankServicePort();
         return port.makePayment(creditCard, paymentAmount);
     }
+
+
     
     
 }

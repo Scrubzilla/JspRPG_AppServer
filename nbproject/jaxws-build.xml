@@ -19,6 +19,14 @@
             <classpath path="${java.home}/../lib/tools.jar:${build.classes.dir}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
         </taskdef>
     </target>
+    <target name="wsgen-BattleHandlerBean" depends="wsgen-init">
+        <copy todir="${build.classes.dir}/META-INF">
+            <fileset dir="${webinf.dir}" includes="wsit-WS.BattleHandlerBean.xml"/>
+        </copy>
+        <wsgen sourcedestdir="${build.generated.sources.dir}/jax-ws" resourcedestdir="${build.generated.sources.dir}/jax-ws/resources/" destdir="${build.generated.sources.dir}/jax-ws" verbose="true" keep="true" genwsdl="true" sei="WS.BattleHandlerBean" xendorsed="true">
+            <classpath path="${java.home}/../lib/tools.jar:${build.classes.dir}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
+        </wsgen>
+    </target>
     <target name="wsgen-ApplicationWebService" depends="wsgen-init">
         <copy todir="${build.classes.dir}/META-INF">
             <fileset dir="${webinf.dir}" includes="wsit-WS.ApplicationWebService.xml"/>
@@ -32,14 +40,6 @@
             <fileset dir="${webinf.dir}" includes="wsit-WS.ZoneHandlerBean.xml"/>
         </copy>
         <wsgen sourcedestdir="${build.generated.sources.dir}/jax-ws" resourcedestdir="${build.generated.sources.dir}/jax-ws/resources/" destdir="${build.generated.sources.dir}/jax-ws" verbose="true" keep="true" genwsdl="true" sei="WS.ZoneHandlerBean" xendorsed="true">
-            <classpath path="${java.home}/../lib/tools.jar:${build.classes.dir}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
-        </wsgen>
-    </target>
-    <target name="wsgen-BattleHandlerBean" depends="wsgen-init">
-        <copy todir="${build.classes.dir}/META-INF">
-            <fileset dir="${webinf.dir}" includes="wsit-WS.BattleHandlerBean.xml"/>
-        </copy>
-        <wsgen sourcedestdir="${build.generated.sources.dir}/jax-ws" resourcedestdir="${build.generated.sources.dir}/jax-ws/resources/" destdir="${build.generated.sources.dir}/jax-ws" verbose="true" keep="true" genwsdl="true" sei="WS.BattleHandlerBean" xendorsed="true">
             <classpath path="${java.home}/../lib/tools.jar:${build.classes.dir}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
         </wsgen>
     </target>
@@ -77,7 +77,7 @@
     </target>
     <target name="wsimport-client-BankService" depends="wsimport-init">
         <mkdir dir="${build.generated.dir}/jax-wsCache/BankService"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/BankService" destdir="${build.generated.dir}/jax-wsCache/BankService" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/BankService/wsdl/localhost_8080/BankService/BankService.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8080/BankService/BankService?WSDL" xnocompile="true" xendorsed="true" package="WSClients">
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/BankService" destdir="${build.generated.dir}/jax-wsCache/BankService" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/BankService/wsdl/localhost_8080/BankService/BankService.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8080/BankService/BankService?WSDL" xnocompile="true" xendorsed="true">
             <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/BankService/wsdl/localhost_8080/BankService/BankService.wsdl"/>
             <produces dir="${build.generated.dir}/jax-wsCache/BankService"/>
         </wsimport>
@@ -88,7 +88,7 @@
         </copy>
     </target>
     <target name="wsimport-client-clean-BankService" depends="-init-project">
-        <delete dir="${build.generated.sources.dir}/jax-ws/WSClients"/>
+        <delete dir="${build.generated.sources.dir}/jax-ws/ws"/>
         <delete dir="${build.generated.dir}/jax-wsCache/BankService"/>
     </target>
     <target name="wsimport-client-generate" depends="wsimport-client-BankService"/>

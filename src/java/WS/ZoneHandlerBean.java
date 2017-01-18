@@ -82,13 +82,13 @@ public class ZoneHandlerBean {
     
     @WebMethod
     public String addToZone2Chat(String message, String username){
-        ZoneStorage.getInstance().addMessageToChat1(username + " - " + message);
+        ZoneStorage.getInstance().addMessageToChat2(username + " - " + message);
         return "successfully added the meesage to chat";
     }
     
     @WebMethod
     public String addToZone3Chat(String message, String username){
-        ZoneStorage.getInstance().addMessageToChat1(username + " - " + message);
+        ZoneStorage.getInstance().addMessageToChat3(username + " - " + message);
         return "successfully added the meesage to chat";
     }
 }

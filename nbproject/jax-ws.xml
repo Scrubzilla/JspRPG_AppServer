@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
   <services>
+    <service name="BattleHandlerBean">
+      <implementation-class>WS.BattleHandlerBean</implementation-class>
+    </service>
     <service name="ApplicationWebService">
       <implementation-class>WS.ApplicationWebService</implementation-class>
     </service>
     <service name="ZoneHandlerBean">
       <implementation-class>WS.ZoneHandlerBean</implementation-class>
-    </service>
-    <service name="BattleHandlerBean">
-      <implementation-class>WS.BattleHandlerBean</implementation-class>
     </service>
     <service name="PvPHandlerBean">
       <implementation-class>WS.PvPHandlerBean</implementation-class>
@@ -21,7 +21,7 @@
     <client name="BankService">
       <wsdl-url>http://localhost:8080/BankService/BankService?WSDL</wsdl-url>
       <local-wsdl-file>localhost_8080/BankService/BankService.wsdl</local-wsdl-file>
-      <package-name forceReplace="true">WSClients</package-name>
+      <package-name>ws</package-name>
       <catalog-file>catalog.xml</catalog-file>
       <wsimport-options>
         <wsimport-option>
@@ -47,10 +47,6 @@
         <wsimport-option>
           <wsimport-option-name>xendorsed</wsimport-option-name>
           <wsimport-option-value>true</wsimport-option-value>
-        </wsimport-option>
-        <wsimport-option>
-          <wsimport-option-name>package</wsimport-option-name>
-          <wsimport-option-value>WSClients</wsimport-option-value>
         </wsimport-option>
       </wsimport-options>
     </client>
