@@ -357,4 +357,27 @@ public class AccountHelper {
 
         return "Successfully changed the email";
     }
+    
+    public String updateRole(String username, String role){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        org.hibernate.Transaction tx = session.beginTransaction();
+        try {
+
+            String hql = "UPDATE Account SET role =:Role WHERE username =:Username";
+            Query query = session.createSQLQuery(hql);
+            query.setParameter("Username", username);
+            query.setParameter("Role", Integer.parseInt(role));
+            int result = query.executeUpdate();
+            session.getTransaction().commit();
+            System.out.println("Rows Affected: " + result);
+            session.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            tx.rollback();
+            session.close();
+            return "Not successfull";
+        }
+        return "Successfull";
+    }
 }

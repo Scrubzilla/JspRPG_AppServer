@@ -184,6 +184,18 @@ public class ApplicationWebService {
         String response = charHelp.getCharacterName(username);
         return response;
     }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "updateRole")
+    public String updateRole(@WebParam(name = "username") String username, @WebParam(name = "role") String role) {
+        AccountHelper accHelp = new AccountHelper();
+        String response = accHelp.updateRole(username, role);
+        return response;
+    }
+    
+    
     
     
     

@@ -225,7 +225,6 @@ public class CharacterHelper {
             }
         }
         return character.getName() + "";
-    }
-    
+    } 
    
 }
