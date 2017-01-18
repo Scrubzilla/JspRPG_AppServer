@@ -75,21 +75,21 @@
             <isset property="conf.dir"/>
         </condition>
     </target>
-    <target name="wsimport-client-BankService" depends="wsimport-init">
-        <mkdir dir="${build.generated.dir}/jax-wsCache/BankService"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/BankService" destdir="${build.generated.dir}/jax-wsCache/BankService" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/BankService/wsdl/localhost_8080/BankService/BankService.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8080/BankService/BankService?WSDL" xnocompile="true" xendorsed="true">
-            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/BankService/wsdl/localhost_8080/BankService/BankService.wsdl"/>
-            <produces dir="${build.generated.dir}/jax-wsCache/BankService"/>
+    <target name="wsimport-client-JspRPGWebService" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/JspRPGWebService"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/JspRPGWebService" destdir="${build.generated.dir}/jax-wsCache/JspRPGWebService" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/JspRPGWebService/wsdl/localhost_8080/JspRPGBankApp/JspRPGWebService.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8080/JspRPGBankApp/JspRPGWebService?WSDL" xnocompile="true" xendorsed="true">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/JspRPGWebService/wsdl/localhost_8080/JspRPGBankApp/JspRPGWebService.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/JspRPGWebService"/>
         </wsimport>
         <copy todir="${build.generated.sources.dir}/jax-ws">
-            <fileset dir="${build.generated.dir}/jax-wsCache/BankService">
+            <fileset dir="${build.generated.dir}/jax-wsCache/JspRPGWebService">
                 <include name="**/*.java"/>
             </fileset>
         </copy>
     </target>
-    <target name="wsimport-client-clean-BankService" depends="-init-project">
+    <target name="wsimport-client-clean-JspRPGWebService" depends="-init-project">
         <delete dir="${build.generated.sources.dir}/jax-ws/ws"/>
-        <delete dir="${build.generated.dir}/jax-wsCache/BankService"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/JspRPGWebService"/>
     </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-BankService"/>
+    <target name="wsimport-client-generate" depends="wsimport-client-JspRPGWebService"/>
 </project>
