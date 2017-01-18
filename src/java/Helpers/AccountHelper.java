@@ -99,12 +99,11 @@ public class AccountHelper {
         String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(eMail);
-        
+
         if (matcher.matches() == false) {
             return "1";
         }
-        
-        
+
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<Account> accountList = null;
         org.hibernate.Transaction tx = session.beginTransaction();
@@ -157,7 +156,8 @@ public class AccountHelper {
         org.hibernate.Transaction tx = session.beginTransaction();
         try {
 
-            Query q = session.createQuery("from Account");
+            Query q = session.createQuery("from Account where username =:Username");
+            q.setParameter("Username", accUser);
             accountList = (List<Account>) q.list();
             session.close();
 
@@ -167,13 +167,14 @@ public class AccountHelper {
         }
 
         String message = "";
-        for (Account account : accountList) {
-            if (account.getUsername().equalsIgnoreCase(accUser) && account.getPassword().equals(password)) {
-                message = account.getUsername();
-            } else {
-                message = "0";
-            }
+        if (accountList.size() == 0) {
+            message = "0";
+        } else if (accountList.get(0).getUsername().equalsIgnoreCase(accUser) && accountList.get(0).getPassword().equals(password)) {
+            message = accountList.get(0).getUsername();
+        } else {
+            message = "0";
         }
+
         return message;
     }
 
@@ -215,14 +216,14 @@ public class AccountHelper {
             e.printStackTrace();
             tx.rollback();
         }
-        
-        if(accountList.get(0).getSecurityquestionans().equalsIgnoreCase(answer)){
+
+        if (accountList.get(0).getSecurityquestionans().equalsIgnoreCase(answer)) {
             message = "1";
         }
         return message;
     }
 
-    public String addCharacterToAccount(String username, Character chara){
+    public String addCharacterToAccount(String username, Character chara) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         org.hibernate.Transaction tx = session.beginTransaction();
         try {
@@ -242,11 +243,11 @@ public class AccountHelper {
             session.close();
             return "Not successfull";
         }
-        
+
         return "";
     }
-    
-    public boolean checkIfAccHasChar(String username){
+
+    public boolean checkIfAccHasChar(String username) {
         boolean hasChar = false;
 
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -263,19 +264,19 @@ public class AccountHelper {
             e.printStackTrace();
             tx.rollback();
         }
-        
-        if(accountList.size() == 0){
+
+        if (accountList.size() == 0) {
             hasChar = false;
-        }else{
+        } else {
             hasChar = true;
         }
-        
+
         return hasChar;
     }
-    
-    public String checkRole(String username){
+
+    public String checkRole(String username) {
         String response = "0";
-        
+
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<Account> accountList = null;
         org.hibernate.Transaction tx = session.beginTransaction();
@@ -290,15 +291,15 @@ public class AccountHelper {
             e.printStackTrace();
             tx.rollback();
         }
-        
+
         response = accountList.get(0).getRole() + "";
-        
+
         return response;
     }
-    
-    public String forgotPasswordStuff(String email){
+
+    public String forgotPasswordStuff(String email) {
         String response = "";
-        
+
         Session session = HibernateUtil.getSessionFactory().openSession();
         List<Account> accountList = null;
         org.hibernate.Transaction tx = session.beginTransaction();
@@ -313,27 +314,26 @@ public class AccountHelper {
             e.printStackTrace();
             tx.rollback();
         }
-        
-        
-        if(accountList.size() == 0){
+
+        if (accountList.size() == 0) {
             response = "0";
             return response;
-        }else {
+        } else {
             response = accountList.get(0).getUsername();
             return response;
         }
     }
-    
-    public String changeEmail(String username, String newEmail, String oldEmail, String securityAnsw){
-        if(checkEmail(oldEmail).equals("0")){
+
+    public String changeEmail(String username, String newEmail, String oldEmail, String securityAnsw) {
+        if (checkEmail(oldEmail).equals("0")) {
             return "There is no such email";
         }
-        
-        if(checkSecurityAnswer(username, securityAnsw).equalsIgnoreCase("0")){
+
+        if (checkSecurityAnswer(username, securityAnsw).equalsIgnoreCase("0")) {
             return "The answer is not correct";
         }
-        
-         Session session = HibernateUtil.getSessionFactory().openSession();
+
+        Session session = HibernateUtil.getSessionFactory().openSession();
         org.hibernate.Transaction tx = session.beginTransaction();
         try {
 
@@ -352,8 +352,7 @@ public class AccountHelper {
             session.close();
             return "Not successfull";
         }
-        
-        
+
         return "Successfully changed the email";
     }
 }

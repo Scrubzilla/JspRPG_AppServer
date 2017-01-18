@@ -100,15 +100,15 @@ public class CharacterHelper {
         return message;
     }
 
-    public String changeLocationOfChar(String charName, int location) {
+    public String changeLocationOfChar(String charName, String location) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         org.hibernate.Transaction tx = session.beginTransaction();
         try {
 
-            String hql = "UPDATE Character SET location =:Location WHERE name =:Name";
+            String hql = "UPDATE `character` SET location = '" + location + "' WHERE name ='" + charName + "'";
             Query query = session.createSQLQuery(hql);
-            query.setParameter("Name", charName);
-            query.setParameter("Location", location);
+            //query.setParameter("Name", charName);
+            //query.setParameter("Location", Integer.parseInt(location));
             int result = query.executeUpdate();
             session.getTransaction().commit();
             System.out.println("Rows Affected: " + result);
@@ -156,7 +156,7 @@ public class CharacterHelper {
         org.hibernate.Transaction tx = session.beginTransaction();
         try {
 
-            String hql = "UPDATE Character SET xp =:XP WHERE name =:Name";
+            String hql = "UPDATE `character` SET xp =:XP WHERE name =:Name";
             Query query = session.createSQLQuery(hql);
             query.setParameter("Name", name);
             query.setParameter("Location", xp);
