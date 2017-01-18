@@ -9,6 +9,7 @@ import Pojo.GenericHelper;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.ejb.Stateless;
 import jsrpg.Account;
 import jsrpg.Character;
 import jsrpg.HibernateUtil;
@@ -19,8 +20,9 @@ import org.hibernate.Session;
  *
  * @author User
  */
-public class AccountHelper {
 
+public class AccountHelper {
+ 
     public String createAccount(String email, String username, String password, String securityQuest, String securityAns) {
         GenericHelper genHelp = new GenericHelper();
         int id = genHelp.getCount("Id", "Account") + 1;
