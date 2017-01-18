@@ -34,7 +34,7 @@ public class BankwebService {
     @WebMethod(operationName = "makePayment")
     public String makePayment(@WebParam(name = "creditcard") String creditcard, @WebParam(name = "amount") String amount) {
         String response = makePayment_1(creditcard, Float.parseFloat(amount));
-        
+        //wee
         return response;
     }
 
