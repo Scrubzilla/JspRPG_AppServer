@@ -31,47 +31,47 @@ public class AreaHelper {
         
         if(zoneId.equalsIgnoreCase("1")){
             if(areaId.equalsIgnoreCase("1")){
-                areaCreatureList.add(creatueList.get(0));
-                areaCreatureList.add(creatueList.get(0));
+                areaCreatureList.add(creatueList.get(1));
+                areaCreatureList.add(creatueList.get(1));
                 
             }else if(areaId.equalsIgnoreCase("2")){
-                areaCreatureList.add(creatueList.get(1));
+                areaCreatureList.add(creatueList.get(2));
   
             }else if(areaId.equalsIgnoreCase("3")){
-                areaCreatureList.add(creatueList.get(0));
                 areaCreatureList.add(creatueList.get(1));
+                areaCreatureList.add(creatueList.get(2));
                 
             } 
         }else if(zoneId.equalsIgnoreCase("2")){
             if(areaId.equalsIgnoreCase("1")){
-                areaCreatureList.add(creatueList.get(0));
-                areaCreatureList.add(creatueList.get(0));
-                areaCreatureList.add(creatueList.get(0));
-                areaCreatureList.add(creatueList.get(0));
+                areaCreatureList.add(creatueList.get(1));
+                areaCreatureList.add(creatueList.get(1));
+                areaCreatureList.add(creatueList.get(1));
+                areaCreatureList.add(creatueList.get(1));
                 
             }else if(areaId.equalsIgnoreCase("2")){
-                areaCreatureList.add(creatueList.get(1));
-                areaCreatureList.add(creatueList.get(1));
+                areaCreatureList.add(creatueList.get(2));
+                areaCreatureList.add(creatueList.get(2));
                 
             }else if(areaId.equalsIgnoreCase("3")){
+                areaCreatureList.add(creatueList.get(0));
                 areaCreatureList.add(creatueList.get(2));
-                areaCreatureList.add(creatueList.get(1));
             } 
         }else if(zoneId.equalsIgnoreCase("3")){
             if(areaId.equalsIgnoreCase("1")){
-                areaCreatureList.add(creatueList.get(0));
                 areaCreatureList.add(creatueList.get(1));
                 areaCreatureList.add(creatueList.get(2));
+                areaCreatureList.add(creatueList.get(0));
                 
             }else if(areaId.equalsIgnoreCase("2")){
-                areaCreatureList.add(creatueList.get(1));
                 areaCreatureList.add(creatueList.get(2));
-                areaCreatureList.add(creatueList.get(2));
+                areaCreatureList.add(creatueList.get(0));
+                areaCreatureList.add(creatueList.get(0));
                 
             }else if(areaId.equalsIgnoreCase("3")){
-                areaCreatureList.add(creatueList.get(2));
-                areaCreatureList.add(creatueList.get(2));
-                areaCreatureList.add(creatueList.get(2));
+                areaCreatureList.add(creatueList.get(0));
+                areaCreatureList.add(creatueList.get(0));
+                areaCreatureList.add(creatueList.get(0));
                 
             } 
         }
